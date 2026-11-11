@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Anggurrr! 🏎️🎮</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0d001a;
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            overflow: hidden;
+        }
+
+        /* Retro Grid Background */
+        .retro-bg {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(transparent 0%, #b026ff 2%, transparent 3%), 
+                        linear-gradient(90deg, transparent 0%, #b026ff 2%, transparent 3%);
+            background-size: 50px 30px;
+            transform: perspective(300px) rotateX(60deg);
+            transform-origin: bottom;
+            z-index: 0;
+            animation: gridMove 2s linear infinite;
+            opacity: 0.3;
+        }
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 30px; }
+        }
+
+        .phase {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .phase.active { display: flex; }
+
+        h1, h2, p { text-shadow: 2px 2px 0px #ff007f; line-height: 1.5; }
+
+        .btn {
+            background: #ff007f;
+            color: #fff;
+            border: 4px solid #b026ff;
+            padding: 15px 20px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 0 0 15px #ff007f;
+            transition: transform 0.1s;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+        .btn:active { transform: scale(0.95); }
+
+        /* Phase 1: Insert Coin */
+        .insert-coin {
+            animation: blink 1s step-end infinite;
+            color: #ffaa00;
+            cursor: pointer;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Phase 2: Mini Game */
+        #game-container {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            background: #222;
+            border: 4px solid #ff007f;
+            overflow: hidden;
+            display: none;
+            margin-bottom: 20px;
+        }
+        #car {
+            position: absolute;
+            bottom: 20px;
+            left: 130px;
+            width: 40px;
+            height: 60px;
+            background: #d4c29a; /* Sand Khaki Pearl */
+            border-radius: 5px;
+            box-shadow: 0 0 10px #d4c29a;
+        }
+        .obstacle, .coin {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            font-size: 24px;
+            text-align: center;
+            line-height: 30px;
+        }
+        .score-board {
+            font-size: 14px;
+            color: #ffaa00;
+            margin-bottom: 10px;
+        }
+        .game-controls {
+            display: flex;
+            gap: 20px;
+        }
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 0, 127, 0.5);
+            border: 2px solid #b026ff;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* Phase 3: Garage */
+        .garage-box {
+            background: rgba(0,0,0,0.8);
+            border: 4px solid #b026ff;
+            padding: 20px;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #b026ff;
+        }
+        .car-display {
+            width: 150px;
+            height: 80px;
+            background: #d4c29a;
+            margin: 20px auto;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            border: 2px solid #fff;
+        }
+        .car-display::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 10px;
+            width: 30px;
+            height: 10px;
+            background: #333;
+            border-radius: 5px;
+            box-shadow: 100px 0 0 #333;
+        }
+        .car-desc {
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            color: #00ffcc;
+        }
+
+        /* Phase 4: Cinema (Perbaikan Teks Surat) */
+        .cinema-screen {
+            width: 90%;
+            max-width: 400px;
+            background: #000;
+            border: 8px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 0 30px #ff007f;
+            height: 85vh; /* Biar scrollable di HP */
+            overflow-y: auto;
+        }
+        .cinema-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 2px solid #b026ff;
+            margin-bottom: 10px;
+        }
+        #cinema-text {
+            font-family: 'VT323', monospace;
+            font-size: 22px;
+            color: #ffd1ff;
+            text-align: left;
+            white-space: pre-wrap;
+            line-height: 1.8;
+            letter-spacing: 0.8px;
+            text-shadow: 0 0 5px #ff007f;
+            min-height: 150px;
+            margin-top: 15px;
+            padding-bottom: 30px;
+        }
+
+        /* Phase 5: Finale */
+        .ticket {
+            background: #ffaa00;
+            color: #000;
+            padding: 20px;
+            font-size: 16px;
+            border: 4px dashed #000;
+            cursor: pointer;
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="retro-bg"></div>
+    <!-- Pastikan file lagunya bernama 'musik.mp3' di dalam folder lu -->
+    <audio id="bgm" loop>
+        <source src="musik.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- PHASE 1 -->
+    <div id="phase1" class="phase active">
+        <h1 style="font-size: 30px; color: #ff007f;">RETRO ROADTRIP</h1>
+        <p style="font-family: 'VT323', monospace; font-size: 24px; color: #00ffcc;">Dream Garage Edition</p>
+        <br><br>
+        <div class="insert-coin" onclick="startSystem()">> INSERT COIN TO PLAY <</div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div id="phase2" class="phase">
+        <h2 style="font-size: 16px;">Highway Racer</h2>
+        <div class="score-board">Bensin Cinta: <span id="score">0</span> / 10</div>
+        <div id="game-container">
+            <div id="car"></div>
+        </div>
+        <div class="game-controls" id="game-controls" style="display: none;">
+            <div class="control-btn" id="btn-left">◀</div>
+            <div class="control-btn" id="btn-right">▶</div>
+        </div>
+        <button class="btn" id="btn-start-game" onclick="startGame()">START ENGINE</button>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div id="phase3" class="phase">
+        <div class="garage-box">
+            <h2>Dream Garage</h2>
+            <div class="car-display"></div>
+            <h3 style="color: #ff007f;">Honda HR-V</h3>
+            <p style="color: #ffaa00; font-size: 10px;">Color: Sand Khaki Pearl</p>
+            <p class="car-desc">Mobil impian yang super elegan, tangguh, dan cantik. Cocok banget buat princess kaya kamu keliling kota!</p>
+            <button class="btn" onclick="honkHorn()">BUNYIKAN KLAKSON 📯</button>
+            <br>
+            <button class="btn" onclick="nextPhase(3, 4); setupCinema();" style="background: #00ffcc; color: #000;">LANJUT PERJALANAN 🏁</button>
+        </div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div id="phase4" class="phase">
+        <div class="cinema-screen" id="cinema-screen">
+            <img src="foto1.jpg" id="cinema-img" class="cinema-img" alt="Memory" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZmlsbD0iI2ZmZiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiPklNQUdFIExPQURJTkc8L3RleHQ+PC9zdmc+'">
+            <div id="cinema-text"></div>
+            <br>
+            <button id="btn-cinema-next" class="btn" style="display: none; margin: 20px auto;" onclick="nextPhase(4, 5)">REDEEM HIGH SCORE 🎟️</button>
+        </div>
+    </div>
+
+    <!-- PHASE 5 -->
+    <div id="phase5" class="phase">
+        <div class="ticket" onclick="triggerFinale()">
+            🎫 TICKET: HIGH SCORE!<br><br>TAP TO REDEEM 🎫
+        </div>
+        <div id="finale-msg" style="display:none;">
+            <h1 style="color: #ff007f; font-size: 35px;">HAPPY BIRTHDAY<br>ANGGURRR!</h1>
+            <p class="car-desc">Bahagia selalu princess kecil Ayah Bunda! ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        // --- Global Flow ---
+        function nextPhase(current, next) {
+            document.getElementById('phase' + current).classList.remove('active');
+            document.getElementById('phase' + next).classList.add('active');
+        }
+
+        function startSystem() {
+            const bgm = document.getElementById('bgm');
+            bgm.play().catch(e => console.log("Audio ditahan browser, klik interaksi lagi:", e));
+            nextPhase(1, 2);
+        }
+
+        // --- Phase 2: Game Logic ---
+        let score = 0;
+        let gameInterval;
+        let spawnInterval;
+        let carPos = 130;
+        const carSpeed = 30;
+        const containerWidth = 300;
+        const carWidth = 40;
+
+        function startGame() {
+            document.getElementById('btn-start-game').style.display = 'none';
+            document.getElementById('game-container').style.display = 'block';
+            document.getElementById('game-controls').style.display = 'flex';
+            score = 0;
+            document.getElementById('score').innerText = score;
+            
+            gameInterval = setInterval(updateGame, 50);
+            spawnInterval = setInterval(spawnItem, 1000);
+            setupControls();
+        }
+
+        function setupControls() {
+            const moveLeft = () => { if (carPos > 10) carPos -= carSpeed; updateCarPos(); };
+            const moveRight = () => { if (carPos < containerWidth - carWidth - 10) carPos += carSpeed; updateCarPos(); };
+            
+            document.getElementById('btn-left').ontouchstart = (e) => { e.preventDefault(); moveLeft(); };
+            document.getElementById('btn-left').onmousedown = moveLeft;
+            document.getElementById('btn-right').ontouchstart = (e) => { e.preventDefault(); moveRight(); };
+            document.getElementById('btn-right').onmousedown = moveRight;
+
+            window.onkeydown = (e) => {
+                if (e.key === 'ArrowLeft') moveLeft();
+                if (e.key === 'ArrowRight') moveRight();
+            };
+        }
+
+        function updateCarPos() {
+            document.getElementById('car').style.left = carPos + 'px';
+        }
+
+        function spawnItem() {
+            const container = document.getElementById('game-container');
+            const isCoin = Math.random() > 0.3; // 70% Coin, 30% Obstacle
+            const el = document.createElement('div');
+            el.className = isCoin ? 'coin' : 'obstacle';
+            el.innerText = isCoin ? '⛽' : (Math.random() > 0.5 ? '📚' : '⏰');
+            el.style.left = Math.floor(Math.random() * (containerWidth - 30)) + 'px';
+            el.style.top = '-30px';
+            container.appendChild(el);
+        }
+
+        function updateGame() {
+            const items = document.querySelectorAll('.coin, .obstacle');
+            const carRect = document.getElementById('car').getBoundingClientRect();
+
+            items.forEach(item => {
+                let top = parseFloat(item.style.top);
+                top += 5; 
+                item.style.top = top + 'px';
+
+                const itemRect = item.getBoundingClientRect();
+
+                if (top > 400) {
+                    item.remove();
+                } else if (
+                    itemRect.bottom > carRect.top &&
+                    itemRect.top < carRect.bottom &&
+                    itemRect.right > carRect.left &&
+                    itemRect.left < carRect.right
+                ) {
+                    if (item.className === 'coin') {
+                        score++;
+                        document.getElementById('score').innerText = score;
+                        item.remove();
+                        if (score >= 10) {
+                            winGame();
+                        }
+                    } else {
+                        score = Math.max(0, score - 1);
+                        document.getElementById('score').innerText = score;
+                        item.remove();
+                        item.style.background = 'red'; 
+                    }
+                }
+            });
+        }
+
+        function winGame() {
+            clearInterval(gameInterval);
+            clearInterval(spawnInterval);
+            document.querySelectorAll('.coin, .obstacle').forEach(el => el.remove());
+            alert("Bensin Cinta Penuh! Lanjut ke Pit Stop!");
+            nextPhase(2, 3);
+        }
+
+        // --- Phase 3: Garage ---
+        function honkHorn() {
+            alert("Tiiin Tiiin! 🚗💨 Jalan-jalan pake HR-V Sand Khaki Pearl yuk!");
+        }
+
+        // --- Phase 4: Cinema & Letter ---
+        const photos = ['foto1.jpg', 'foto2.jpg', 'foto3.jpg'];
+        let photoIndex = 0;
+        
+        // Teks surat yang udah dirapikan
+        const letterText = `Haiii Anggurrr... 💖\n\nHadiah kecil selanjutnya dari akuu menyusuulll~~~~~\n\nBerhubung dulu belum sempet bikin surat istimewa, jadinya sekarang aku bikinnya yaaa, mungkin sederhana tapi semoga berkesan untuk kamu.\n\nTerimakasiii sudah selalu pilih aku untuk jadi tempat curhat kamu, aku selalu terkesannnn!!!!\n\nMaaf yaaa suratnyaaa ga terlalu spesial dan udah telat banget dari birthday kamuuu.\n\nSemua harapan baik tertuju padamuuu!!! Bahagiaa selaluuu princess kecil Ayah Bunda ❤️`;
+
+        function setupCinema() {
+            // Rotasi foto setiap 3 detik
+            setInterval(() => {
+                photoIndex = (photoIndex + 1) % photos.length;
+                document.getElementById('cinema-img').src = photos[photoIndex];
+            }, 3000);
+            
+            // Jeda 1 detik sebelum mulai ngetik
+            setTimeout(startTypewriter, 1000);
+        }
+
+        function startTypewriter() {
+            const el = document.getElementById('cinema-text');
+            const screen = document.getElementById('cinema-screen');
+            el.innerHTML = '';
+            let i = 0;
+            
+            function type() {
+                if (i < letterText.length) {
+                    const char = letterText.charAt(i);
+                    el.innerHTML += char;
+                    i++;
+                    
+                    // Kecepatan ngetik dasar
+                    let delay = 70; 
+                    
+                    // Jeda dinamis berdasarkan tanda baca
+                    if (char === '.' || char === '!' || char === '?') {
+                        delay = 400;
+                    } else if (char === ',') {
+                        delay = 250;
+                    } else if (char === '\n') {
+                        delay = 500;
+                    }
+                    
+                    // Scroll otomatis ke bawah kalau teks kepanjangan
+                    screen.scrollTop = screen.scrollHeight;
+                    
+                    setTimeout(type, delay);
+                } else {
+                    document.getElementById('btn-cinema-next').style.display = 'block';
+                    screen.scrollTop = screen.scrollHeight;
+                }
+            }
+            type();
+        }
+
+        // --- Phase 5: Finale ---
+        function triggerFinale() {
+            document.querySelector('.ticket').style.display = 'none';
+            document.getElementById('finale-msg').style.display = 'block';
+            
+            setInterval(() => {
+                const conf = document.createElement('div');
+                conf.style.position = 'absolute';
+                conf.style.width = '10px';
+                conf.style.height = '10px';
+                conf.style.background = ['#ff007f', '#00ffcc', '#ffaa00', '#b026ff'][Math.floor(Math.random()*4)];
+                conf.style.left = Math.random() * 100 + 'vw';
+                conf.style.top = '-10px';
+                conf.style.zIndex = '999';
+                document.body.appendChild(conf);
+                
+                let y = 0;
+                const fall = setInterval(() => {
+                    y += 5;
+                    conf.style.top = y + 'px';
+                    if (y > window.innerHeight) {
+                        clearInterval(fall);
+                        conf.remove();
+                    }
+                }, 20);
+            }, 100);
+        }
+    </script>
+</body>
+</html>
